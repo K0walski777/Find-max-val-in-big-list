@@ -93,3 +93,38 @@ func TestMaximum_NegativeNumbers(t *testing.T) {
 		t.Errorf("ожидаемое значение -100500, получено %d", got)
 	}
 }
+
+// Тесты для проверки maxChunks
+func TestMaxChunks_ZeroSize(t *testing.T) {
+	if got := maxChunks([]int{}); got != 0 {
+		t.Errorf("ожидаемое значение 0 для пустого слайса, получено %d", got)
+	}
+
+	if got := maxChunks(nil); got != 0 {
+		t.Errorf("ожидаемое значение 0 для nil-слайса, получено %d", got)
+	}
+}
+
+func TestMaxChunks_LessThanChunks(t *testing.T) {
+	data := []int{1524124, 15352, 1, 53, 93993}
+	if got := maxChunks(data); got != 1524124 {
+		t.Errorf("ожидаемое значение 1524124, получено %d", got)
+	}
+}
+
+func TestMaxChunks_NotDivByChunks(t *testing.T) {
+	data := []int{1, 2, 3, 33, 44, 55, 66, 100, 101, 102, 103}
+	if got := maxChunks(data); got != 103 {
+		t.Errorf("ожидаемое значение 103, получено %d", got)
+	}
+}
+
+func TestMaxChunks_CompareWithSingleThread(t *testing.T) {
+	data := generateRandomElements(10_000)
+	expected := maximum(data)
+	got := maxChunks(data)
+
+	if got != expected {
+		t.Errorf("не совпадает результат сравнения: maximum вернул %d, maxChunks возвращает %d", expected, got)
+	}
+}
