@@ -40,3 +40,56 @@ func TestGenerateRandomElements_StandSize(t *testing.T) {
 		}
 	}
 }
+
+// Тесты для проверки maximum
+func TestMaximum_ZeroSize(t *testing.T) {
+	if got := maximum([]int{}); got != 0 {
+		t.Errorf("ожидаемое значение 0 для пустого слайса, получено %d", got)
+	}
+
+	if got := maximum(nil); got != 0 {
+		t.Errorf("ожидаемое значение 0 для nil-слайса, получено %d", got)
+	}
+}
+
+func TestMaximum_SingleElement(t *testing.T) {
+	data := []int{10}
+	if got := maximum(data); got != 10 {
+		t.Errorf("ожидаемое значение 10, получено %d", got)
+	}
+}
+
+func TestMaximum_MaxAtBegin(t *testing.T) {
+	data := []int{15000, 24, 100, 1, 160}
+	if got := maximum(data); got != 15000 {
+		t.Errorf("ожидаемое значение 15000, получено %d", got)
+	}
+}
+
+func TestMaximum_MaxAtMiddle(t *testing.T) {
+	data := []int{15000, 24, 20000, 1, 160}
+	if got := maximum(data); got != 20000 {
+		t.Errorf("ожидаемое значение 20000, получено %d", got)
+	}
+}
+
+func TestMaximum_MaxAtEnd(t *testing.T) {
+	data := []int{15000, 24, 100, 1, 31099}
+	if got := maximum(data); got != 31099 {
+		t.Errorf("ожидаемое значение 31099, получено %d", got)
+	}
+}
+
+func TestMaximum_EqualElements(t *testing.T) {
+	data := []int{1, 1, 1, 1}
+	if got := maximum(data); got != 1 {
+		t.Errorf("ожидаемое значение 7, получено %d", got)
+	}
+}
+
+func TestMaximum_NegativeNumbers(t *testing.T) {
+	data := []int{-1, -3, -100, -100500, -111}
+	if got := maximum(data); got != -1 {
+		t.Errorf("ожидаемое значение -100500, получено %d", got)
+	}
+}
